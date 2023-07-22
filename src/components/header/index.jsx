@@ -9,20 +9,31 @@ import { MdAccountCircle } from "react-icons/md";
 import "./style.scss";
 import Menu from "./components/menu";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpenCreate, setOpenCreateWork } from "../../redux/slice/appReduce";
 import Workspaces from "./components/workspaces";
 import Recent from "./components/recent";
 import Star from "./components/starred";
+import Create from "./components/create";
+import NewCreate from "./components/create/newCreate";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [openWork, setOpenWork] = useState(false);
   const [openRecent, setOpenRecent] = useState(false);
   const [openStar, setOpenStar] = useState(false);
+  // const [openCreate, setOpenCreate] = useState(false);
+  const { openCreateWork, openCreate } = useSelector(
+    (states) => states.appReduce
+  );
   const [selectItem, setSelectItem] = useState(null);
+  const dispatch = useDispatch();
   const isOpen = () => {
     setOpen(!open);
     setOpenWork(false);
     setOpenRecent(false);
     setOpenStar(false);
+    setSelectItem(null);
+    dispatch(setOpenCreate(false));
   };
   const isOpenMenu = (name) => {
     setSelectItem(name);
@@ -31,16 +42,22 @@ const Header = () => {
       setOpenRecent(false);
       setOpen(false);
       setOpenStar(false);
+      dispatch(setOpenCreate(false));
+      dispatch(setOpenCreateWork(false));
     } else if (name === "Recent") {
       setOpenRecent(!openRecent);
       setOpen(false);
       setOpenWork(false);
       setOpenStar(false);
+      dispatch(setOpenCreate(false));
+      dispatch(setOpenCreateWork(false));
     } else if (name === "Starred") {
       setOpenStar(!openStar);
       setOpenRecent(false);
       setOpen(false);
       setOpenWork(false);
+      dispatch(setOpenCreate(false));
+      dispatch(setOpenCreateWork(false));
     }
   };
   const isClose = () => {
@@ -48,7 +65,16 @@ const Header = () => {
     setOpenWork(false);
     setOpenRecent(false);
     setOpenStar(false);
+    dispatch(setOpenCreate(false));
+    dispatch(setOpenCreateWork(false));
     setSelectItem(null);
+  };
+  const isOpenCreate = () => {
+    dispatch(setOpenCreate(!openCreate));
+    setOpen(false);
+    setOpenWork(false);
+    setOpenRecent(false);
+    setOpenStar(false);
   };
   const Menu1 = [
     {
@@ -95,7 +121,7 @@ const Header = () => {
             </div>
           ))}
         </div>
-        <div className="header-btnCreate">
+        <div className="header-btnCreate" onClick={() => isOpenCreate()}>
           <span>Create</span>
         </div>
         {openWork && <Workspaces />}
@@ -110,6 +136,15 @@ const Header = () => {
         {openStar && (
           <div className="header-popup" onClick={() => isClose()}></div>
         )}
+        {openCreate && <Create />}
+        {openCreate && (
+          <div className="header-popup" onClick={() => isClose()}></div>
+        )}
+        <NewCreate />
+        {/* {openCreateWork && <NewCreate />}
+        {openCreateWork && (
+          <div className="header-popup" onClick={() => isClose()}></div>
+        )} */}
       </div>
       <div className="header-sub">
         <div className="header-search">
