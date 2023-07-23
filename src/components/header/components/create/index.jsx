@@ -1,5 +1,15 @@
+import { useDispatch } from "react-redux";
 import "./style.scss";
+import {
+  setOpenCreate,
+  setOpenCreateWork,
+} from "../../../../redux/slice/appReduce";
 const Create = () => {
+  const dispatch = useDispatch();
+  const isOpenCreate = () => {
+    dispatch(setOpenCreateWork(true));
+    dispatch(setOpenCreate(false));
+  };
   return (
     <div className="Create">
       <div className="Create-title">
@@ -13,7 +23,7 @@ const Create = () => {
         <h1>Start with a template</h1>
         <p>Get started faster with a board template.</p>
       </div>
-      <div className="Create-title">
+      <div className="Create-title" onClick={()=> isOpenCreate()}>
         <h1>Create Workspace</h1>
         <p>
           A Workspace is a group of boards and people. Use it to organize your

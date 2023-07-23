@@ -140,11 +140,10 @@ const Header = () => {
         {openCreate && (
           <div className="header-popup" onClick={() => isClose()}></div>
         )}
-        <NewCreate />
-        {/* {openCreateWork && <NewCreate />}
+        {openCreateWork && <NewCreate />}
         {openCreateWork && (
           <div className="header-popup" onClick={() => isClose()}></div>
-        )} */}
+        )}
       </div>
       <div className="header-sub">
         <div className="header-search">
