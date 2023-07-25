@@ -2,7 +2,7 @@
   width: 260px;
   height: calc(100vh - 49px);
   display: block;
-  background-color: #1d2125;
+  background-color: #161a1e;
   box-shadow: 1px 0px 0px 0px hsla(211, 18%, 68%, 0.16);
   .sidebar-title {
     display: flex;
@@ -25,7 +25,7 @@
       font-size: 20px;
       color: #1d2125;
       font-weight: bold;
-      background-color: white;
+      background: linear-gradient(#9f8fef, #579dff);
     }
     .sidebar-name {
       font-size: 14px;

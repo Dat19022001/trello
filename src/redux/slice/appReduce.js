@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   openCreate: false,
   openCreateWork: false,
+  openCreateBoard: false,
 };
 
 const appReduce = createSlice({
@@ -15,8 +16,12 @@ const appReduce = createSlice({
     setOpenCreateWork: (states, actions) => {
       states.openCreateWork = actions.payload;
     },
+    setOpenCreateBoard: (states, actions) => {
+      states.openCreateBoard = actions.payload;
+    },
   },
 });
 
-export const { setOpenCreate, setOpenCreateWork } = appReduce.actions;
+export const { setOpenCreate, setOpenCreateWork, setOpenCreateBoard } =
+  appReduce.actions;
 export default appReduce.reducer;

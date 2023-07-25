@@ -4,7 +4,12 @@ import { AiOutlineSearch, AiOutlineStar } from "react-icons/ai";
 import { RiGitRepositoryPrivateLine } from "react-icons/ri";
 import { Input, Select } from "antd";
 import "./Board.scss";
+import { useState } from "react";
 const Board = () => {
+  const [rename, setRename] = useState(true);
+  const isRename = () => {
+    setRename(!rename);
+  };
   const data = [
     {
       name: "test1",
@@ -22,19 +27,45 @@ const Board = () => {
   return (
     <div className="board">
       <div className="board-title">
-        <div className="board-name">
-          <span className="board-logo">T</span>
-          <div className="board-nameWork">
-            <div className="board-fix">
-              <p>Trello không gian làm việc</p>
-              <BsPencil />
-            </div>
-            <div className="board-private">
-              <RiGitRepositoryPrivateLine />
-              <p>Private</p>
+        {rename ? (
+          <div className="board-name">
+            <span className="board-logo">T</span>
+            <div className="board-nameWork">
+              <div className="board-fix">
+                <p>Trello không gian làm việc</p>
+                <BsPencil onClick={() => isRename()} />
+              </div>
+              <div className="board-private">
+                <RiGitRepositoryPrivateLine />
+                <p>Private</p>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="board-rename">
+            <div className="board-item">
+              <div className="board-itemName">Name</div>
+              <Input className="board-i" placeholder="Trello không gian làm việc" />
+            </div>
+            <div className="board-item">
+              <div className="board-itemName">Short Name</div>
+              <Input className="board-i" placeholder="Trello không gian làm việc" />
+            </div>
+            <div className="board-item">
+              <div className="board-itemName">Website(options)</div>
+              <Input className="board-i" placeholder="" />
+            </div>
+            <div className="board-item">
+              <div className="board-itemName">Description(options)</div>
+              <Input className="board-i" placeholder="" />
+            </div>
+            <div className="board-renameBtn">
+              <div className="board-save">Save</div>
+              <div className="board-cancel" onClick={() => isRename()}>Cancel</div>
+            </div>
+          </div>
+        )}
+
         <div className="board-btn">
           <MdOutlineSupervisorAccount />
           <p>Invite Workspace members</p>

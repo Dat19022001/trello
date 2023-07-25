@@ -6,9 +6,11 @@ import Workspace from "./pages/workspaces";
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <Header />
-        <Workspace/>
+      <div>
+        <div className="App">
+          <Header />
+          <Workspace />
+        </div>
       </div>
     </Provider>
   );
