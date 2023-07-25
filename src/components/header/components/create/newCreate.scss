@@ -1,0 +1,219 @@
+.newCreate {
+  position: fixed;
+  top: 0;
+  left: 5;
+  margin: 48px 0;
+  z-index: 2;
+  .newCreate-popup {
+    display: flex;
+    background-color: #22272b;
+    border-radius: 3px;
+    box-sizing: border-box;
+    min-height: 500px;
+    margin-top: 16px;
+    outline: 0;
+    overflow: hidden;
+    width: 1200px;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+  .newCreate-left {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 0 24px;
+    overflow: auto;
+    text-align: left;
+    z-index: 3;
+    margin: 64px auto 16px;
+    box-sizing: border-box;
+    .newCreate-form {
+      width: 388px;
+      h1 {
+        color: #b6c2cf;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 28px;
+        margin: 0px 0px 12px 0;
+      }
+      p {
+        font-size: 18px;
+        color: #9fadbc;
+        margin: 0;
+      }
+    }
+    .newCreate-label {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 16px;
+      margin-bottom: 4px;
+      margin-top: 24px;
+      color: #b6c2cf;
+    }
+    .newCreate-input {
+      width: 388px;
+      height: 48px;
+      background-color: #22272b;
+      border: none;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 2px #a6c5e229;
+      box-sizing: border-box;
+      display: block;
+      line-height: 20px;
+      color: #b6c2cf;
+      margin-bottom: 12px;
+      outline: none;
+      padding: 8px 12px;
+      transition-duration: 85ms;
+      transition-property: background-color, border-color, box-shadow;
+      transition-timing-function: ease;
+      &:focus {
+        background-color: #22272b;
+        box-shadow: inset 0 0 0 2px #85b8ff;
+      }
+      &::placeholder {
+        font-size: 14px;
+        font-weight: 400;
+        color: #b6c2cf;
+      }
+    }
+    .newCreate-name {
+      .newCreate-sub {
+        color: #9fadbc;
+        font-size: 12px;
+        margin: 0px 0px 12px 0px;
+      }
+    }
+    .newCreate-select {
+      width: 388px !important;
+      .ant-select-selector {
+        height: 48px;
+        background-color: #22272b;
+        border: none;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 2px #a6c5e229;
+        box-sizing: border-box;
+        display: block;
+        line-height: 20px;
+        margin-bottom: 12px;
+        outline: none;
+        padding: 8px 12px;
+        transition-duration: 85ms;
+        transition-property: background-color, border-color, box-shadow;
+        transition-timing-function: ease;
+      }
+      .ant-select-arrow {
+        color: #b6c2cf;
+        top: 40% !important;
+      }
+      .ant-select-selection-item {
+        color: #b6c2cf;
+      }
+    }
+    .newCreate-text {
+      width: 388px;
+      height: 120px;
+      background-color: #22272b;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 2px #a6c5e229;
+      box-sizing: border-box;
+      display: block;
+      line-height: 20px;
+      margin-bottom: 12px;
+      outline: none;
+      resize: none;
+      padding: 8px 12px;
+      transition-duration: 85ms;
+      transition-property: background-color, border-color, box-shadow;
+      transition-timing-function: ease;
+      font-size: 14px;
+      color: #b6c2cf;
+      &:hover {
+        background-color: #22272b;
+        box-shadow: inset 0 0 0 2px #85b8ff;
+      }
+    }
+    .newCreate-des {
+      .newCreate-sub {
+        color: #9fadbc;
+        font-size: 12px;
+        margin: 0px 0px 12px 0px;
+      }
+    }
+    .newCreate-btn {
+      height: 48px;
+      width: 388px;
+      // background-color: #bcd6f00a;
+      // box-shadow: none;
+      // border: none;
+      // color: #bfdbf847;
+      // cursor: not-allowed;
+      background-color: #579dff;
+      box-shadow: none;
+      border: none;
+      color: #1d2125;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .newCreate-email {
+      h1 {
+        color: #b6c2cf;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 28px;
+        margin: 0px 0px 12px 0;
+      }
+      p {
+        font-size: 18px;
+        color: #9fadbc;
+        margin: 0;
+      }
+      .newCreate-input {
+        width: 100%;
+      }
+      .newCreate-btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .newCreate-name {
+        margin-bottom: 40px;
+      }
+      .newCreate-finish {
+        text-align: center;
+        font-size: 14px;
+        color: #9fadbc;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+          text-decoration: none;
+          color: #b6c2cf;
+        }
+      }
+    }
+  }
+  .newCreate-right {
+    background-image: url("../../../../assets/anhnen.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+  .newCreate-img {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .newCreate-position {
+    position: absolute;
+    left: 0;
+    bottom: 25%;
+  }
+  .newCreate-none{
+    display: none;
+  }
+}

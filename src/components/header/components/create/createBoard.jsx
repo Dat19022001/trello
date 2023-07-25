@@ -1,0 +1,142 @@
+import { AiOutlineClose, AiOutlineLeft } from "react-icons/ai";
+import { TiTick } from "react-icons/ti";
+import Bg from "../../../../assets/review.svg";
+import { Input, Select } from "antd";
+import "./createBoard.scss";
+import { useDispatch } from "react-redux";
+import {
+  setOpenCreate,
+  setOpenCreateBoard,
+} from "../../../../redux/slice/appReduce";
+import { useState } from "react";
+
+const CreateBoard = () => {
+  const List = [
+    {
+      name: "1",
+      img: "http://localhost:3000/static/media/bg1.960d14ba6f47d3bb269e.jpg",
+    },
+    {
+      name: "2",
+      img: "http://localhost:3000/static/media/bg3.ac6c87c38e282efb99f5.jpg",
+    },
+    {
+      name: "3",
+      img: "http://localhost:3000/static/media/bg3.ac6c87c38e282efb99f5.jpg",
+    },
+    {
+      name: "4",
+      img: "http://localhost:3000/static/media/bg4.4005ed4fe0f68fd34f46.jpg",
+    },
+  ];
+  const [isBg, setIsBg] = useState(
+    "http://localhost:3000/static/media/bg1.960d14ba6f47d3bb269e.jpg"
+  );
+  const [name, setName] = useState("1");
+  const dispatch = useDispatch();
+  const isClose = () => {
+    dispatch(setOpenCreateBoard(false));
+  };
+  const isBack = () => {
+    dispatch(setOpenCreate(true));
+    dispatch(setOpenCreateBoard(false));
+  };
+  const isChooseBg = (name) => {
+    const check = List.find((item) => item.name === name);
+    setIsBg(check.img);
+    setName(name);
+  };
+  return (
+    <div className="NewBoard">
+      <div className="board-title">
+        <AiOutlineLeft onClick={() => isBack()} />
+        <p>Create Board</p>
+        <AiOutlineClose onClick={() => isClose()} />
+      </div>
+      <div className="board-review">
+        <div
+          className="board-a"
+          style={{
+            backgroundImage: `url(${isBg})`,
+          }}
+        >
+          <img src={Bg} alt="anh" />
+        </div>
+      </div>
+      <p className="board-bg">Background</p>
+      <div className="board-list">
+        {List.map((item, index) => (
+          <div
+            className="board-item"
+            key={index}
+            style={{ backgroundImage: `url(${item.img})` }}
+            onClick={() => isChooseBg(item.name)}
+          >
+            <TiTick className={`${name === item.name ? '' : "board-none"}`} />
+          </div>
+        ))}
+      </div>
+      <div className="board-label">Board title</div>
+      <Input className="board-input" placeholder="" autoFocus="true" />
+      <p className="board-required">👋Board title is required</p>
+      <div className="board-label">Workspace</div>
+      <Select
+        className="board-select"
+        defaultValue="choose"
+        // onChange={handleChange}
+        options={[
+          {
+            value: "choose",
+            label: "choose...",
+          },
+          {
+            value: "lucy",
+            label: "Lucy",
+          },
+          {
+            value: "Yiminghe",
+            label: "yiminghe",
+          },
+          {
+            value: "disabled",
+            label: "Disabled",
+            disabled: true,
+          },
+        ]}
+      />
+      <div className="board-label">Visibility</div>
+      <Select
+        className="board-select"
+        defaultValue="choose"
+        // onChange={handleChange}
+        options={[
+          {
+            value: "choose",
+            label: "choose...",
+          },
+          {
+            value: "lucy",
+            label: "Lucy",
+          },
+          {
+            value: "Yiminghe",
+            label: "yiminghe",
+          },
+          {
+            value: "disabled",
+            label: "Disabled",
+            disabled: true,
+          },
+        ]}
+      />
+      <div className="board-create board-btn">Create</div>
+      <div className="board-tem board-btn">Start with template</div>
+      <p className="board-sub">
+        By using images from Unsplash, you agree to their license and Terms of
+        Service
+      </p>
+    </div>
+  );
+};
+
+export default CreateBoard;
