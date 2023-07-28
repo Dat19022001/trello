@@ -21,6 +21,8 @@ import Star from "./components/starred";
 import Create from "./components/create";
 import NewCreate from "./components/create/newCreate";
 import CreateBoard from "./components/create/createBoard";
+import { Link } from "react-router-dom";
+import { appPath } from "../../config/appPath";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [openWork, setOpenWork] = useState(false);
@@ -107,9 +109,9 @@ const Header = () => {
       </div>
       {open && <Menu />}
       {open && <div className="header-popup" onClick={() => isClose()}></div>}
-      <a href="a" className="header-home">
+      <Link to={appPath.default} className="header-home">
         <div className="header-logo"></div>
-      </a>
+      </Link>
       <div className="header-nav">
         <div className="header-menu">
           {Menu1.map((item, index) => (
@@ -150,10 +152,11 @@ const Header = () => {
         {openCreateWork && (
           <div className="header-popup" onClick={() => isClose()}></div>
         )}
-        {openCreateBoard && <CreateBoard />}
+        {openCreateBoard && <div className="header-board"><CreateBoard /></div>}
         {openCreateBoard && (
           <div className="header-popup" onClick={() => isClose()}></div>
         )}
+        
       </div>
       <div className="header-sub">
         <div className="header-search">

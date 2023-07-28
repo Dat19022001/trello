@@ -1,15 +1,18 @@
 import { Provider } from "react-redux";
 import Header from "./components/header";
 import store from "./redux/store";
-import Workspace from "./pages/workspaces";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRouters from "./config/appRouters";
 
 function App() {
   return (
     <Provider store={store}>
       <div>
         <div className="App">
-          <Header />
-          <Workspace />
+          <Router>
+            <Header />
+            <AppRouters />
+          </Router>
         </div>
       </div>
     </Provider>

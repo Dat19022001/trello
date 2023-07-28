@@ -8,7 +8,7 @@
 
   .header-popup {
     position: fixed;
-    top: 0;
+    top: 40px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -189,5 +189,12 @@
   .header-select {
     background-color: #092957;
     color: #579dff !important;
+  }
+  .header-board{
+    position: fixed;
+    will-change: top, left;
+    top: 52px;
+    left: 530px;
+    z-index: 2;
   }
 }
