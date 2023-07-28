@@ -99,9 +99,6 @@
         margin-bottom: 12px;
         outline: none;
         padding: 8px 12px;
-        transition-duration: 85ms;
-        transition-property: background-color, border-color, box-shadow;
-        transition-timing-function: ease;
       }
       .ant-select-arrow {
         color: #b6c2cf;
@@ -124,9 +121,7 @@
       outline: none;
       resize: none;
       padding: 8px 12px;
-      transition-duration: 85ms;
-      transition-property: background-color, border-color, box-shadow;
-      transition-timing-function: ease;
+      border: none;
       font-size: 14px;
       color: #b6c2cf;
       &:hover {
@@ -144,11 +139,6 @@
     .newCreate-btn {
       height: 48px;
       width: 388px;
-      // background-color: #bcd6f00a;
-      // box-shadow: none;
-      // border: none;
-      // color: #bfdbf847;
-      // cursor: not-allowed;
       background-color: #579dff;
       box-shadow: none;
       border: none;
@@ -157,6 +147,11 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
+    }
+    .newCreate-btnX{
+      background-color: #bcd6f00a !important;
+      color: #bfdbf847 !important;
+      cursor: not-allowed !important;
     }
     .newCreate-email {
       h1 {

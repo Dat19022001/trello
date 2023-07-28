@@ -1,14 +1,58 @@
 import { Input, Select } from "antd";
+import { v4 as uuidv4 } from "uuid";
+
 import Anh from "../../../../assets/anhcreate.svg";
 import Anh2 from "../../../../assets/anhPosition.svg";
 import "./newCreate.scss";
 import { useState } from "react";
+import { setWorkspaceStorage } from "../../../../utils/storage";
+import { useNavigate } from "react-router-dom";
+import { appPath } from "../../../../config/appPath";
+import { setOpenCreateWork } from "../../../../redux/slice/appReduce";
+import { useDispatch } from "react-redux";
 
 const NewCreate = () => {
+  const { TextArea } = Input;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const Id = uuidv4();
   const [isNext, setIsNext] = useState(false);
   const nextStep = () => {
-    setIsNext(true);
+    if (name === "" && type === "") {
+    } else {
+      setIsNext(true);
+    }
   };
+  const onFinish = () => {
+    setWorkspaceStorage(data);
+    navigate(appPath.workspace + "/" + Id);
+    dispatch(setOpenCreateWork(false));
+  };
+  const [name, setName] = useState("");
+  const [des, setDes] = useState("");
+  const [type, setType] = useState("");
+  const [member, setMember] = useState("");
+  const onChangeName = (value) => {
+    setName(value);
+  };
+  const onChangDes = (value) => {
+    setDes(value);
+  };
+  const onChangEmail = (value) => {
+    setMember(value);
+  };
+  const handleChange = (value) => {
+    setType(value);
+  };
+  const data = {
+    id: Id,
+    name: name,
+    des: des,
+    type: type,
+    member: member,
+    web: "",
+  };
+
   return (
     <div className="newCreate">
       <div className="newCreate-popup">
@@ -21,14 +65,20 @@ const NewCreate = () => {
             </p>
             <div className="newCreate-name">
               <div className="newCreate-label">Workspace name</div>
-              <Input className="newCreate-input" placeholder="Taco's Co" />
+              <Input
+                className="newCreate-input"
+                value={name}
+                placeholder="Taco's Co"
+                onChange={(e) => onChangeName(e.target.value)}
+              />
               <p className="newCreate-sub">
                 This is the name of your company, team or organization.
               </p>
             </div>
             <div className="newCreate-type">
-              <div className="newCreate-label">Workspace name</div>
+              <div className="newCreate-label">Workspace type</div>
               <Select
+                onChange={handleChange}
                 className="newCreate-select"
                 defaultValue="choose"
                 style={{
@@ -58,15 +108,24 @@ const NewCreate = () => {
             </div>
             <div className="newCreate-des">
               <div className="newCreate-label">Workspace description</div>
-              <textarea
+              <TextArea
                 className="newCreate-text"
                 placeholder="Our team organizes everything here"
+                value={des}
+                onChange={(e) => onChangDes(e.target.value)}
               />
               <p className="newCreate-sub">
                 Get your members on board with a few words about your Workspace.
               </p>
             </div>
-            <div className="newCreate-btn" onClick={()=> nextStep()}>Continue</div>
+            <div
+              className={`newCreate-btn ${
+                name === "" && type === "" ? "newCreate-btnX" : ""
+              }`}
+              onClick={() => nextStep()}
+            >
+              Continue
+            </div>
           </div>
           <div className={`newCreate-email ${isNext ? "" : "newCreate-none"}`}>
             <h1>Invite your team</h1>
@@ -77,6 +136,8 @@ const NewCreate = () => {
             <div className="newCreate-name">
               <div className="newCreate-label">Workspace members</div>
               <Input
+                value={member}
+                onChange={(e) => onChangEmail(e.target.value)}
                 className="newCreate-input"
                 placeholder="e.g. calrissian@cloud.ci"
               />
@@ -86,7 +147,9 @@ const NewCreate = () => {
               </p>
             </div>
             <div className="newCreate-btn">Invete to Workspace</div>
-            <div className="newCreate-finish">I'll do this later</div>
+            <div className="newCreate-finish" onClick={() => onFinish()}>
+              I'll do this later
+            </div>
           </div>
         </div>
         <div className="newCreate-right">

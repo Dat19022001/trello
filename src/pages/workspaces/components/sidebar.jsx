@@ -11,16 +11,37 @@ import { MdManageAccounts } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
 import { BsThreeDots } from "react-icons/bs";
 import "./sidebar.scss";
+import { useDispatch, useSelector } from "react-redux";
+import CreateBoard from "../../../components/header/components/create/createBoard";
+import { setOpenCreateBoardS } from "../../../redux/slice/appReduce";
+import { useParams } from "react-router-dom";
+import { getWorkspaceById } from "../../../utils/storage";
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const { type } = useParams();
+  const workspace = getWorkspaceById(type);
+  const { openCreateBoardS } = useSelector((states) => states.appReduce);
+  const isClose = () => {
+    dispatch(setOpenCreateBoardS(false));
+  };
+  const isOpen = () => {
+    dispatch(setOpenCreateBoardS(true));
+  };
+  const firstLetter = (name) => {
+    const firstCharacter = name.charAt(0).toUpperCase();
+    return firstCharacter;
+  };
   return (
     <div className="sidebar">
       <div className="sidebar-title">
-        <div className="sidebar-img">
-          <span className="sidebar-first">T</span>
-        </div>
-        <div className="sidebar-workspace">
-          <div className="sidebar-name">Trello Không gian làm việc</div>
-          <div className="sidebar-price">Free</div>
+        <div style={{ display: "flex" }}>
+          <div className="sidebar-img">
+            <span className="sidebar-first">{firstLetter(workspace.name)}</span>
+          </div>
+          <div className="sidebar-workspace">
+            <div className="sidebar-name">{workspace.name}</div>
+            <div className="sidebar-price">Free</div>
+          </div>
         </div>
         <AiOutlineLeft />
       </div>
@@ -61,7 +82,7 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-board">
         <p>Your Boards</p>
-        <AiOutlinePlus />
+        <AiOutlinePlus onClick={() => isOpen()} />
       </div>
       <div className="sidebar-list">
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -73,6 +94,14 @@ const Sidebar = () => {
           <AiOutlineStar />
         </div>
       </div>
+      {openCreateBoardS && (
+        <div className="sidebar-openBoard">
+          <CreateBoard />
+        </div>
+      )}
+      {openCreateBoardS && (
+        <div className="sidebar-close" onClick={() => isClose()}></div>
+      )}
     </div>
   );
 };

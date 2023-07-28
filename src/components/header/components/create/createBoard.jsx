@@ -1,12 +1,17 @@
 import { AiOutlineClose, AiOutlineLeft } from "react-icons/ai";
 import { TiTick } from "react-icons/ti";
 import Bg from "../../../../assets/review.svg";
+import Bg9 from "../../../../assets/bg1.jpg";
+import Bg8 from "../../../../assets/bg2.jpg";
+import Bg7 from "../../../../assets/bg3.jpg";
+import Bg6 from "../../../../assets/bg4.jpg";
 import { Input, Select } from "antd";
 import "./createBoard.scss";
 import { useDispatch } from "react-redux";
 import {
   setOpenCreate,
   setOpenCreateBoard,
+  setOpenCreateBoardS,
 } from "../../../../redux/slice/appReduce";
 import { useState } from "react";
 
@@ -14,28 +19,27 @@ const CreateBoard = () => {
   const List = [
     {
       name: "1",
-      img: "http://localhost:3000/static/media/bg1.960d14ba6f47d3bb269e.jpg",
+      img: `${Bg9}`,
     },
     {
       name: "2",
-      img: "http://localhost:3000/static/media/bg3.ac6c87c38e282efb99f5.jpg",
+      img: `${Bg8}`,
     },
     {
       name: "3",
-      img: "http://localhost:3000/static/media/bg3.ac6c87c38e282efb99f5.jpg",
+      img: `${Bg7}`,
     },
     {
       name: "4",
-      img: "http://localhost:3000/static/media/bg4.4005ed4fe0f68fd34f46.jpg",
+      img: `${Bg6}`,
     },
   ];
-  const [isBg, setIsBg] = useState(
-    "http://localhost:3000/static/media/bg1.960d14ba6f47d3bb269e.jpg"
-  );
+  const [isBg, setIsBg] = useState(Bg9);
   const [name, setName] = useState("1");
   const dispatch = useDispatch();
   const isClose = () => {
     dispatch(setOpenCreateBoard(false));
+    dispatch(setOpenCreateBoardS(false));
   };
   const isBack = () => {
     dispatch(setOpenCreate(true));
@@ -72,7 +76,7 @@ const CreateBoard = () => {
             style={{ backgroundImage: `url(${item.img})` }}
             onClick={() => isChooseBg(item.name)}
           >
-            <TiTick className={`${name === item.name ? '' : "board-none"}`} />
+            <TiTick className={`${name === item.name ? "" : "board-none"}`} />
           </div>
         ))}
       </div>
