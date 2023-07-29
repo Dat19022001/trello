@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import { getWorkSpaceStorage } from "../../../../utils/storage";
 import { appPath } from "../../../../config/appPath";
 import "./style.scss";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Workspaces = () => {
   const data = getWorkSpaceStorage();
+  const { refetchWorkspace } = useSelector((states) => states.appReduce);
+  useEffect(() => {}, [refetchWorkspace]);
 
   const firstLetter = (name) => {
     const firstCharacter = name.charAt(0).toUpperCase();
@@ -17,7 +21,7 @@ const Workspaces = () => {
       <div className="Workspaces-content">
         {data.map((item, index) => (
           <div className="Workspaces-item" key={index}>
-            <Link to={appPath.workspace +"/" + item.id}>
+            <Link to={appPath.workspace + "/" + item.id}>
               <div className="Workspaces-imgae">
                 <span className="Workspaces-firstCharacter">
                   {firstLetter(item.name)}

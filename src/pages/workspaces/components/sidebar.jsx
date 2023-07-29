@@ -14,12 +14,13 @@ import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CreateBoard from "../../../components/header/components/create/createBoard";
 import { setOpenCreateBoardS } from "../../../redux/slice/appReduce";
-import { useParams } from "react-router-dom";
-import { getWorkspaceById } from "../../../utils/storage";
-const Sidebar = () => {
+import { useNavigate } from "react-router-dom";
+import { appPath } from "../../../config/appPath";
+// import { useParams } from "react-router-dom";
+// import { getWorkspaceById } from "../../../utils/storage";
+const Sidebar = ({ workspace }) => {
   const dispatch = useDispatch();
-  const { type } = useParams();
-  const workspace = getWorkspaceById(type);
+  const navigate = useNavigate();
   const { openCreateBoardS } = useSelector((states) => states.appReduce);
   const isClose = () => {
     dispatch(setOpenCreateBoardS(false));
@@ -46,7 +47,10 @@ const Sidebar = () => {
         <AiOutlineLeft />
       </div>
       <div className="sidebar-ul">
-        <div className="sidebar-li">
+        <div
+          className="sidebar-li"
+          onClick={() => navigate(appPath.workspace + "/" + workspace.id)}
+        >
           <div className="sidebar-item">
             <AiOutlineCreditCard />
             <div className="sidebar-sub">Boards</div>
@@ -59,7 +63,12 @@ const Sidebar = () => {
           </div>
           <AiOutlinePlus style={{ padding: 10 }} />
         </div>
-        <div className="sidebar-li">
+        <div
+          className="sidebar-li"
+          onClick={() =>
+            navigate(appPath.workspace + "/" + workspace.id + "/account")
+          }
+        >
           <div className="sidebar-item">
             <AiOutlineSetting />
             <div className="sidebar-sub">Workspace settings</div>
