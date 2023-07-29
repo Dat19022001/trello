@@ -15,7 +15,7 @@ export const getWorkspaceById = (Id) => {
 
 export const updateWorkspace = (data) => {
   const Workspaces = JSON.parse(localStorage.getItem("Workspace")) || [];
-  const indexWorkspace = Workspaces.findIndex((item) => (item.id = data.id));
+  const indexWorkspace = Workspaces.findIndex((item) => item.id === data.id);
   if (indexWorkspace !== -1) {
     const workspace = {
       ...Workspaces[indexWorkspace],
@@ -27,4 +27,16 @@ export const updateWorkspace = (data) => {
     localStorage.setItem("Workspace", JSON.stringify(Workspaces));
     return true;
   }
+  return false;
+};
+
+export const deleteWorkspace = (id) => {
+  const Workspaces = JSON.parse(localStorage.getItem("Workspace")) || [];
+  const indexWorkspace = Workspaces.findIndex((item) => item.id === id);
+  if (indexWorkspace !== -1) {
+    Workspaces.splice(indexWorkspace, 1);
+    localStorage.setItem("Workspace", JSON.stringify(Workspaces));
+    return true;
+  }
+  return false;
 };

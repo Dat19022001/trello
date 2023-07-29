@@ -1,7 +1,7 @@
 import { AiOutlineSearch, AiOutlineStar } from "react-icons/ai";
 import { Input, Select } from "antd";
 import "./Board.scss";
-import WorkSpaceTitle from "./worksapceTitle";
+import WorkSpaceTitle from "./workspaceTitle";
 import { useParams } from "react-router-dom";
 import { getWorkspaceById } from "../../../utils/storage";
 import { useSelector } from "react-redux";

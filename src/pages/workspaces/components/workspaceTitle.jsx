@@ -9,9 +9,10 @@ import { useDispatch } from "react-redux";
 import { setOnUpdate } from "../../../redux/slice/appReduce";
 const WorkSpaceTitle = ({ workspace }) => {
   const [rename, setRename] = useState(true);
-  const [name, setName] = useState(workspace.name);
-  const [des, setDes] = useState(workspace.des);
-  const [web, setWeb] = useState(workspace.web);
+  const [name, setName] = useState();
+  const [des, setDes] = useState();
+  const [web, setWeb] = useState();
+  
   const dispatch = useDispatch();
   const onChangeName = (value) => {
     setName(value);
@@ -64,7 +65,6 @@ const WorkSpaceTitle = ({ workspace }) => {
               <Input
                 className="board-i"
                 placeholder={workspace.name}
-                value={name}
                 onChange={(e) => onChangeName(e.target.value)}
               />
             </div>
@@ -77,7 +77,6 @@ const WorkSpaceTitle = ({ workspace }) => {
               <Input
                 className="board-i"
                 placeholder=""
-                value={web}
                 onChange={(e) => onChangeWeb(e.target.value)}
               />
             </div>
@@ -86,7 +85,6 @@ const WorkSpaceTitle = ({ workspace }) => {
               <Input
                 className="board-i"
                 placeholder={`${workspace.des ? workspace.des : ""}`}
-                value={des}
                 onChange={(e) => onChangDes(e.target.value)}
               />
             </div>
