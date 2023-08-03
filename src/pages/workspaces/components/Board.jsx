@@ -3,31 +3,31 @@ import { Input, Select } from "antd";
 import "./Board.scss";
 import WorkSpaceTitle from "./workspaceTitle";
 import { useParams } from "react-router-dom";
-import { getWorkspaceById } from "../../../utils/storage";
-import { useSelector } from "react-redux";
+import { getBoard, getWorkspaceById } from "../../../utils/storage";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import CreateBoard from "../../../components/header/components/create/createBoard";
+import { setOpenCreateBoardSS } from "../../../redux/slice/appReduce";
 const Board = () => {
   const { type } = useParams();
-
-  const data = [
-    {
-      name: "test1",
-    },
-    {
-      name: "test2",
-    },
-    {
-      name: "test3",
-    },
-    {
-      name: "test3",
-    },
-  ];
-  const { onUpdate } = useSelector((states) => states.appReduce);
+  const dispatch = useDispatch();
+  const { onUpdate, openCreateBoardSS } = useSelector(
+    (states) => states.appReduce
+  );
   let workspace = getWorkspaceById(type);
-  useEffect(() => {
-
-  }, [onUpdate]);
+  const Board = getBoard(workspace.id);
+  if (Board === undefined) {
+    var data = [];
+  } else {
+    data = Board.board;
+  }
+  const isOpen = () => {
+    dispatch(setOpenCreateBoardSS(true));
+  };
+  const isClose = () => {
+    dispatch(setOpenCreateBoardSS(false));
+  };
+  useEffect(() => {}, [onUpdate]);
   return (
     <div className="board">
       <WorkSpaceTitle workspace={workspace} />
@@ -106,15 +106,29 @@ const Board = () => {
           </div>
         </div>
         <div className="board-list">
-          <div className="board-create board-item">Create new board</div>
+          <div className="board-create board-item" onClick={() => isOpen()}>
+            Create new board
+          </div>
           {data.map((item, index) => (
-            <div className="board-item board-star" key={index}>
-              {item.name}
+            <div
+              className="board-item board-star"
+              style={{ backgroundImage: `url(${item.backgroundImage})` }}
+              key={index}
+            >
+              {item.nameBoard}
               <AiOutlineStar />
             </div>
           ))}
         </div>
       </div>
+      {openCreateBoardSS && (
+        <div className="board-position">
+          <CreateBoard />
+        </div>
+      )}
+      {openCreateBoardSS && (
+        <div className="board-close" onClick={() => isClose()}></div>
+      )}
     </div>
   );
 };

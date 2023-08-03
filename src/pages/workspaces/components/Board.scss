@@ -104,6 +104,8 @@
       width: calc((100% - 60px) / 4);
       margin-right: 20px;
       margin-bottom: 20px;
+      background-position: center center;
+      background-size: cover;
       &:nth-child(4n) {
         margin-right: 0px;
       }
@@ -126,5 +128,20 @@
         }
       }
     }
+  }
+  .board-position {
+    position: fixed;
+    will-change: top, left;
+    top: 120px;
+    left: 570px;
+    z-index: 2;
+  }
+  .board-close {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
 }
