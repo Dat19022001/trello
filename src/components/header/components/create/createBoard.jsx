@@ -12,10 +12,17 @@ import {
   setOpenCreate,
   setOpenCreateBoard,
   setOpenCreateBoardS,
+  setOpenCreateBoardSS,
 } from "../../../../redux/slice/appReduce";
 import { useState } from "react";
+import { getWorkSpaceStorage, setBoard } from "../../../../utils/storage";
+import { v4 as uuidv4 } from "uuid";
 
 const CreateBoard = () => {
+  const Workspaces = getWorkSpaceStorage();
+  const selectWorkspace = Workspaces.map((workspace) => {
+    return { value: workspace.id, label: workspace.name };
+  });
   const List = [
     {
       name: "1",
@@ -36,6 +43,10 @@ const CreateBoard = () => {
   ];
   const [isBg, setIsBg] = useState(Bg9);
   const [name, setName] = useState("1");
+  const [nameBoard, setNameBoard] = useState();
+  const [idWorkspace, setIdWorkspace] = useState();
+  const [check, setCheck] = useState(false);
+  const Id = uuidv4();
   const dispatch = useDispatch();
   const isClose = () => {
     dispatch(setOpenCreateBoard(false));
@@ -49,6 +60,30 @@ const CreateBoard = () => {
     const check = List.find((item) => item.name === name);
     setIsBg(check.img);
     setName(name);
+  };
+  const onChangName = (value) => {
+    setNameBoard(value);
+  };
+  const handleChange = (value) => {
+    setIdWorkspace(value);
+    setCheck(true);
+  };
+  const createBoard = () => {
+    const data = {
+      idWorkspace: idWorkspace,
+      board: [
+        {
+          backgroundImage: isBg,
+          id: Id,
+          nameBoard: nameBoard,
+          like: false,
+        },
+      ],
+    };
+    setBoard(data);
+    dispatch(setOpenCreateBoard(false));
+    dispatch(setOpenCreateBoardS(false));
+    dispatch(setOpenCreateBoardSS(false));
   };
   return (
     <div className="NewBoard">
@@ -81,59 +116,26 @@ const CreateBoard = () => {
         ))}
       </div>
       <div className="board-label">Board title</div>
-      <Input className="board-input" placeholder="" autoFocus="true" />
+      <Input
+        className="board-input"
+        placeholder=""
+        autoFocus="true"
+        onChange={(e) => onChangName(e.target.value)}
+      />
       <p className="board-required">👋Board title is required</p>
       <div className="board-label">Workspace</div>
       <Select
         className="board-select"
-        defaultValue="choose"
-        // onChange={handleChange}
-        options={[
-          {
-            value: "choose",
-            label: "choose...",
-          },
-          {
-            value: "lucy",
-            label: "Lucy",
-          },
-          {
-            value: "Yiminghe",
-            label: "yiminghe",
-          },
-          {
-            value: "disabled",
-            label: "Disabled",
-            disabled: true,
-          },
-        ]}
+        defaultValue={selectWorkspace[0].label}
+        onChange={handleChange}
+        options={selectWorkspace}
       />
-      <div className="board-label">Visibility</div>
-      <Select
-        className="board-select"
-        defaultValue="choose"
-        // onChange={handleChange}
-        options={[
-          {
-            value: "choose",
-            label: "choose...",
-          },
-          {
-            value: "lucy",
-            label: "Lucy",
-          },
-          {
-            value: "Yiminghe",
-            label: "yiminghe",
-          },
-          {
-            value: "disabled",
-            label: "Disabled",
-            disabled: true,
-          },
-        ]}
-      />
-      <div className="board-create board-btn">Create</div>
+      <div
+        className={`${check ? "board-create" : ""} board-btn`}
+        onClick={() => createBoard()}
+      >
+        Create
+      </div>
       <div className="board-tem board-btn">Start with template</div>
       <p className="board-sub">
         By using images from Unsplash, you agree to their license and Terms of

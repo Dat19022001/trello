@@ -10,6 +10,7 @@ const WorkspaceDelete = () => {
   const workspace = getWorkspaceById(id);
   const { onUpdate } = useSelector((states) => states.appReduce);
   useEffect(() => {}, [onUpdate]);
+
   return (
     <div className="Workspace1">
       <Sidebar workspace={workspace} />

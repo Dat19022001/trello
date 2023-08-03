@@ -8,6 +8,7 @@ const initialState = {
   onUpdate: null,
   openDeleteWorkspace: false,
   refetchWorkspace: null,
+  openCreateBoardSS: false,
 };
 
 const appReduce = createSlice({
@@ -35,6 +36,9 @@ const appReduce = createSlice({
     setRefetchWorkspace: (states, actions) => {
       states.refetchWorkspace = actions.payload;
     },
+    setOpenCreateBoardSS: (states, actions) => {
+      states.openCreateBoardSS = actions.payload;
+    },
   },
 });
 
@@ -46,5 +50,6 @@ export const {
   setOnUpdate,
   setOpenDeleteWorkspace,
   setRefetchWorkspace,
+  setOpenCreateBoardSS,
 } = appReduce.actions;
 export default appReduce.reducer;

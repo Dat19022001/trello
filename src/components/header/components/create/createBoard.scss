@@ -144,12 +144,13 @@
     box-shadow: none;
     border: none;
     color: #bfdbf847;
-    cursor: pointer;
+    cursor: not-allowed;
     margin-bottom: 5px;
-    &:hover {
-      background-color: #a1bdd914;
-      color: #b6c2cf;
-    }
+  }
+  .board-create {
+    background-color: #579dff;
+    color: #1d2125;
+    cursor: pointer;
   }
   .board-required {
     color: #9fadbc;

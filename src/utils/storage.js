@@ -40,3 +40,29 @@ export const deleteWorkspace = (id) => {
   }
   return false;
 };
+
+export const setBoard = (data) => {
+  var Boards = JSON.parse(localStorage.getItem("Boards")) || [];
+  if (Boards.length === 0) {
+    Boards.push(data);
+  } else {
+    Boards.forEach((item) => {
+      if (item.idWorkspace === data.idWorkspace) {
+        item.board.push({
+          id: data.board[0].id,
+          nameBoard: data.board[0].nameBoard,
+          like: false,
+          backgroundImage: data.board[0].backgroundImage,
+        });
+      } else {
+        Boards.push(data);
+      }
+    });
+  }
+  localStorage.setItem("Boards", JSON.stringify(Boards));
+};
+export const getBoard = (id) => {
+  const Boards = JSON.parse(localStorage.getItem("Boards")) || [];
+  const Board = Boards.find((item) => item.idWorkspace === id);
+  return Board;
+};

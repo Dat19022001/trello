@@ -16,12 +16,18 @@ import CreateBoard from "../../../components/header/components/create/createBoar
 import { setOpenCreateBoardS } from "../../../redux/slice/appReduce";
 import { useNavigate } from "react-router-dom";
 import { appPath } from "../../../config/appPath";
-// import { useParams } from "react-router-dom";
-// import { getWorkspaceById } from "../../../utils/storage";
+import { getBoard } from "../../../utils/storage";
+
 const Sidebar = ({ workspace }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { openCreateBoardS } = useSelector((states) => states.appReduce);
+  const Board = getBoard(workspace.id);
+  if (Board === undefined) {
+    var data = [];
+  } else {
+    data = Board.board;
+  }
   const isClose = () => {
     dispatch(setOpenCreateBoardS(false));
   };
@@ -93,16 +99,23 @@ const Sidebar = ({ workspace }) => {
         <p>Your Boards</p>
         <AiOutlinePlus onClick={() => isOpen()} />
       </div>
-      <div className="sidebar-list">
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span className="sidebar-bg"></span>
-          <span className="sidebar-nameBoard">Test</span>
+      {data.map((item, index) => (
+        <div key={index}>
+          <div className="sidebar-list">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span
+                className="sidebar-bg"
+                style={{ backgroundImage: `url(${item.backgroundImage})` }}
+              ></span>
+              <span className="sidebar-nameBoard">{item.nameBoard}</span>
+            </div>
+            <div style={{ display: "flex" }}>
+              <BsThreeDots />
+              <AiOutlineStar />
+            </div>
+          </div>
         </div>
-        <div style={{ display: "flex" }}>
-          <BsThreeDots />
-          <AiOutlineStar />
-        </div>
-      </div>
+      ))}
       {openCreateBoardS && (
         <div className="sidebar-openBoard">
           <CreateBoard />
