@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { MdDragHandle, MdOutlineAttachment } from "react-icons/md";
 import { BiGroup, BiMessageAltDetail } from "react-icons/bi";
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 
 function Card({ card }) {
@@ -13,12 +15,31 @@ function Card({ card }) {
     const showCardActions = () => {
         return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
     }
+
+    const {
+        attributes, listeners, setNodeRef, transform, transition,isDragging
+    } = useSortable({
+        id: card._id,
+        data: { ...card }
+    });
+    //su dung CSS.Translate thay vi Transform de khong bi bien dang
+    const dndKitCardStyles = {
+        // touchAction:'none',
+        transform: CSS.Translate.toString(transform),
+        transition,
+        opacity:isDragging?0.4:undefined,
+    };
     return (
-        <MuiCard sx={{
-            cursor: "pointer",
-            boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
-            overflow: "unset"
-        }}>
+        <MuiCard
+            ref={setNodeRef}
+            style={dndKitCardStyles}
+            {...attributes}
+            {...listeners}
+            sx={{
+                cursor: "pointer",
+                boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
+                overflow: "unset"
+            }}>
             {card?.cover && <CardMedia sx={{ height: 140 }} image={card?.cover} />}
 
             <CardContent className="card-content" sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
