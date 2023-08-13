@@ -1,9 +1,35 @@
-import { Box, Button } from "@mui/material"
+import { Box, Button, TextField } from "@mui/material"
 import Column from "./Column/Column"
 import { IoMdAdd } from "react-icons/io"
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
+import { useRef, useState } from "react";
+import { useEffect } from "react";
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, handleColumnTitleChange }) {
+    const [onAddColumn, setOnAddColumn] = useState(false);
+    const wrapperRef = useRef(null);
+
+    const handleAddColumn = () => {
+        setOnAddColumn(!onAddColumn);
+        console.log("add column");
+    };
+    const handleClickOutside = (event) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            // Kiểm tra xem sự kiện click chuột có xảy ra bên ngoài wrapper-add-card hay không
+            setOnAddColumn(false);
+        }
+    };
+
+    useEffect(() => {
+        // Gắn sự kiện click vào window khi component được mount
+        window.addEventListener("click", handleClickOutside);
+        return () => {
+            // Hủy bỏ sự kiện khi component bị unmount
+            window.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
+
     return (
         <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy}>
             <Box sx={{
@@ -15,24 +41,31 @@ function ListColumns({ columns }) {
                 overflowY: "hidden"
 
             }}>
-                {columns?.map((column) => <Column key={column._id} column={column} />)}
+                {columns?.map((column) => <Column key={column._id} column={column} handleColumnTitleChange={handleColumnTitleChange} />)}
 
 
 
 
                 {/* add new column btn */}
-                <Box sx={{
-                    minWidth: "200px",
-                    maxWidth: "200px",
-                    mx: 2,
-                    borderRadius: "10px",
-                    height: "fit-content",
-                    backgroundColor: "#ffffff3d",
-                    px: 2,
-                    py: 1,
-                    cursor: "pointer"
-                }}>
-                    <Button sx={{ textTransform: "inherit", color: "#fff", fontWeight: "bold", width: "100%", display: "flex" }} startIcon={<IoMdAdd />}>Add another list</Button>
+                <Box
+                    ref={wrapperRef}
+                    sx={{
+                        minWidth: "200px",
+                        maxWidth: "200px",
+                        mx: 2,
+                        borderRadius: "10px",
+                        height: "fit-content",
+                        backgroundColor: "#ffffff3d",
+                        px: 2,
+                        py: 1,
+                        cursor: "pointer"
+
+                    }}>
+                    <Button sx={{ textTransform: "inherit", color: "#fff", fontWeight: "bold", width: "100%", display: onAddColumn ? "none" : "flex", justifyContent: "flex-start" }} startIcon={<IoMdAdd />} onClick={handleAddColumn}>Add another list</Button>
+                    {onAddColumn && <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                        <TextField sx={{ backgroundColor: "#fff", borderRadius: "6px" }} placeholder='Enter a title for column...'></TextField>
+                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }}>Add Column</Button>
+                    </Box>}
                 </Box>
 
             </Box>

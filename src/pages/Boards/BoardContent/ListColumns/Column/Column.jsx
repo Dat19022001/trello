@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, Button, Typography } from "@mui/material";
+import React, { useState } from 'react'
+import { Box, Button, Input, TextField, TextareaAutosize, Typography } from "@mui/material";
 import TippyCover from "../../../../../components/tippy/Tippy";
 import { AiOutlineFolderAdd } from "react-icons/ai";
 import { MdDragHandle } from "react-icons/md";
@@ -8,9 +8,40 @@ import ListCards from './ListCards/ListCards';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { mapOrder } from '../../../../../utils/sort';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
-function Column({ column }) {
+function Column({ column, handleColumnTitleChange }) {
+    const [onAdd, setOnAdd] = useState(false);
+    const wrapperRef = useRef(null);
+
+    const handleAddCard = () => {
+        setOnAdd(!onAdd);
+        console.log("add card change");
+    };
+    const handleClickOutside = (event) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            // Kiểm tra xem sự kiện click chuột có xảy ra bên ngoài wrapper-add-card hay không
+            setOnAdd(false);
+        }
+    };
+
+    useEffect(() => {
+        // Gắn sự kiện click vào window khi component được mount
+        window.addEventListener("click", handleClickOutside);
+        return () => {
+            // Hủy bỏ sự kiện khi component bị unmount
+            window.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
     const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id")
+
+    const [inputValue, setInputValue] = useState(column?.title)
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value); // Step 3
+        handleColumnTitleChange(inputValue, column._id)
+    };
 
     const {
         attributes, listeners, setNodeRef, transform, transition, isDragging
@@ -23,8 +54,8 @@ function Column({ column }) {
         // touchAction:'none',
         transform: CSS.Translate.toString(transform),
         transition,
-        opacity:isDragging? 0.5 : undefined,
-
+        opacity: isDragging ? 0.5 : undefined,
+        border: isDragging ? "1px solid #2ecc71" : undefined,
 
         // transform:isDragging? "rotate(2deg)" : undefined
         // height:"100%"
@@ -33,8 +64,9 @@ function Column({ column }) {
         <div ref={setNodeRef}
             style={dndKitColumnStyles}
             {...attributes}
-            >
+        >
             <Box
+                ref={wrapperRef}
                 {...listeners}
                 sx={{
                     minWidth: '300px',
@@ -53,7 +85,8 @@ function Column({ column }) {
                     alignItems: "center",
                     justifyContent: "space-between"
                 }}>
-                    <Typography sx={{ fontWeight: "bold", cursor: "pointer" }}>{column?.title}</Typography>
+                    {/* <Typography sx={{ fontWeight: "bold", cursor: "pointer" }}>{column?.title}</Typography> */}
+                    <Input sx={{ fontWeight: "bold", cursor: "pointer" }} value={inputValue} onChange={handleInputChange}></Input>
                     <Box>
                         <TippyCover />
                     </Box>
@@ -64,13 +97,17 @@ function Column({ column }) {
                 <ListCards cards={orderedCards}></ListCards>
                 {/* footer */}
                 <Box sx={{
-                    height: "36px",
+                    height: "fit-content",
                     p: 2,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between"
                 }}>
-                    <Button startIcon={<AiOutlineFolderAdd />} sx={{ fontSize: "14px", fontWeight: "bold", textTransform: "inherit" }}>Add new card</Button>
+                    <Button startIcon={<AiOutlineFolderAdd />} sx={{ fontSize: "14px", fontWeight: "bold", textTransform: "inherit",display:onAdd?"none":"flex" }} onClick={handleAddCard}>Add new card</Button>
+                    {onAdd && <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                        <TextField sx={{ backgroundColor: "#fff" }} placeholder='Enter a title for card...'></TextField>
+                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }}>Add Card</Button>
+                    </Box>}
 
                     <MdDragHandle fontSize={20} cursor={'pointer'}></MdDragHandle>
 

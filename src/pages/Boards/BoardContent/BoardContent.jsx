@@ -55,6 +55,19 @@ function BoardContent({ board }) {
 
         setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, "_id"))
     }, [board])
+    // console.log("orderedColumns",orderedColumns)
+    const handleColumnTitleChange = (newTitle,id) => {
+        // Tìm cột trong orderedColumns có id tương ứng và cập nhật tiêu đề mới
+        setOrderedColumns(prevColumns => {
+            const nextColumns = prevColumns.map(column => {
+                if (column._id === id) {
+                    return { ...column, title: newTitle };
+                }
+                return column;
+            });
+            return nextColumns;
+        });
+    };
 
     const findColumnByCardId = (cardId) => {
         return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
@@ -219,7 +232,7 @@ function BoardContent({ board }) {
     const collisionDetectionStrategy = useCallback((args) => {
 
         if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
-            return closestCorners({ ...args })
+            return closestCenter({ ...args })
         }
         // tim cac diem giao nhau voi con tro
         const pointerIntersections = pointerWithin(args)
@@ -256,7 +269,7 @@ function BoardContent({ board }) {
                 p: "10px 0"
             }}>
 
-                <ListColumns columns={orderedColumns}></ListColumns>
+                <ListColumns columns={orderedColumns} handleColumnTitleChange={handleColumnTitleChange}></ListColumns>
                 <DragOverlay dropAnimation={dropAnimation}>
                     {(!activeDragItemType) && null}
                     {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}
