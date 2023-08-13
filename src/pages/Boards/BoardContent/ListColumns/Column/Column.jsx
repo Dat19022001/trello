@@ -24,6 +24,8 @@ function Column({ column }) {
         transform: CSS.Translate.toString(transform),
         transition,
         opacity:isDragging? 0.5 : undefined,
+
+
         // transform:isDragging? "rotate(2deg)" : undefined
         // height:"100%"
     };
