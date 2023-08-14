@@ -4,9 +4,12 @@ import { IoMdAdd } from "react-icons/io"
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { useRef, useState } from "react";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addNewColumn } from "../../../../redux/slice/appReduce";
 
-function ListColumns({ columns, handleColumnTitleChange }) {
+function ListColumns({ columns, handleColumnTitleChange,handleAddNewColumn,handleAddCardToColumn }) {
     const [onAddColumn, setOnAddColumn] = useState(false);
+    const [titleNewColumn, setTitleNewColumn] = useState("")
     const wrapperRef = useRef(null);
 
     const handleAddColumn = () => {
@@ -20,6 +23,15 @@ function ListColumns({ columns, handleColumnTitleChange }) {
         }
     };
 
+    const AddNewColumn = () => {
+        if (titleNewColumn) {
+          
+            handleAddNewColumn(titleNewColumn);
+            setTitleNewColumn(""); 
+            setOnAddColumn(false); 
+        }
+      };
+
     useEffect(() => {
         // Gắn sự kiện click vào window khi component được mount
         window.addEventListener("click", handleClickOutside);
@@ -29,6 +41,7 @@ function ListColumns({ columns, handleColumnTitleChange }) {
         };
     }, []);
 
+   
 
     return (
         <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy}>
@@ -41,7 +54,7 @@ function ListColumns({ columns, handleColumnTitleChange }) {
                 overflowY: "hidden"
 
             }}>
-                {columns?.map((column) => <Column key={column._id} column={column} handleColumnTitleChange={handleColumnTitleChange} />)}
+                {columns?.map((column) => <Column key={column._id} column={column} handleColumnTitleChange={handleColumnTitleChange} handleAddCardToColumn={handleAddCardToColumn}/>)}
 
 
 
@@ -63,8 +76,8 @@ function ListColumns({ columns, handleColumnTitleChange }) {
                     }}>
                     <Button sx={{ textTransform: "inherit", color: "#fff", fontWeight: "bold", width: "100%", display: onAddColumn ? "none" : "flex", justifyContent: "flex-start" }} startIcon={<IoMdAdd />} onClick={handleAddColumn}>Add another list</Button>
                     {onAddColumn && <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                        <TextField sx={{ backgroundColor: "#fff", borderRadius: "6px" }} placeholder='Enter a title for column...'></TextField>
-                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }}>Add Column</Button>
+                        <TextField sx={{ backgroundColor: "#fff", borderRadius: "6px" }} placeholder='Enter a title for column...' value={titleNewColumn} onChange={(e) => setTitleNewColumn(e.target.value)}></TextField>
+                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }} onClick={AddNewColumn}>Add Column</Button>
                     </Box>}
                 </Box>
 

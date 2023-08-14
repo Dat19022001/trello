@@ -10,9 +10,12 @@ import { CSS } from '@dnd-kit/utilities';
 import { mapOrder } from '../../../../../utils/sort';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-function Column({ column, handleColumnTitleChange }) {
+function Column({ column, handleColumnTitleChange, handleAddCardToColumn }) {
     const [onAdd, setOnAdd] = useState(false);
+    const [textAreaValue, setTextAreaValue] = useState("")
+
     const wrapperRef = useRef(null);
 
     const handleAddCard = () => {
@@ -25,7 +28,19 @@ function Column({ column, handleColumnTitleChange }) {
             setOnAdd(false);
         }
     };
+    const onAddCard = () => {
+        if (textAreaValue) {
+            const cardId = "card-id-" + uuidv4()
+            let newCard = { _id: cardId, boardId: 'board-id-01', columnId: 'column-id-01', title: textAreaValue, description: null, cover: null, memberIds: [], comments: [], attachments: [] }
 
+
+            handleAddCardToColumn(column._id, newCard);
+            setTextAreaValue("");
+            setOnAdd(false);
+            // list.cards.push(newCard)
+
+        }
+    }
     useEffect(() => {
         // Gắn sự kiện click vào window khi component được mount
         window.addEventListener("click", handleClickOutside);
@@ -103,10 +118,10 @@ function Column({ column, handleColumnTitleChange }) {
                     alignItems: "center",
                     justifyContent: "space-between"
                 }}>
-                    <Button startIcon={<AiOutlineFolderAdd />} sx={{ fontSize: "14px", fontWeight: "bold", textTransform: "inherit",display:onAdd?"none":"flex" }} onClick={handleAddCard}>Add new card</Button>
+                    <Button startIcon={<AiOutlineFolderAdd />} sx={{ fontSize: "14px", fontWeight: "bold", textTransform: "inherit", display: onAdd ? "none" : "flex" }} onClick={handleAddCard}>Add new card</Button>
                     {onAdd && <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                        <TextField sx={{ backgroundColor: "#fff" }} placeholder='Enter a title for card...'></TextField>
-                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }}>Add Card</Button>
+                        <TextField onChange={(e) => setTextAreaValue(e.target.value)} value={textAreaValue} sx={{ backgroundColor: "#fff" }} placeholder='Enter a title for card...'></TextField>
+                        <Button sx={{ backgroundColor: "#1976d2", color: "#fff", fontWeight: "bold", mt: 1 }} onClick={onAddCard}>Add Card</Button>
                     </Box>}
 
                     <MdDragHandle fontSize={20} cursor={'pointer'}></MdDragHandle>

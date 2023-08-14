@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import { Box } from "@mui/material";
 import ListColumns from "./ListColumns/ListColumns";
 import { mapOrder } from "../../../utils/sort"
@@ -56,7 +57,7 @@ function BoardContent({ board }) {
         setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, "_id"))
     }, [board])
     // console.log("orderedColumns",orderedColumns)
-    const handleColumnTitleChange = (newTitle,id) => {
+    const handleColumnTitleChange = (newTitle, id) => {
         // Tìm cột trong orderedColumns có id tương ứng và cập nhật tiêu đề mới
         setOrderedColumns(prevColumns => {
             const nextColumns = prevColumns.map(column => {
@@ -69,6 +70,46 @@ function BoardContent({ board }) {
         });
     };
 
+    const handleAddNewColumn = (titleNewColumn) => {
+
+        const lengthColumn = orderedColumns.length
+        const cardOrderId = "card-id-"+uuidv4()
+        let newColumn = {
+            _id: "column-id-0" + (lengthColumn + 1),
+            boardId: 'board-id-01',
+            title: titleNewColumn,
+            cardOrderIds: [cardOrderId],
+            cards: [
+
+                { _id: cardOrderId, boardId: 'board-id-01', columnId: "column-id-0" + (lengthColumn + 1), title: 'Title of card'+uuidv4(), description: null, cover: null, memberIds: [], comments: [], attachments: [] },
+
+            ]
+
+        }
+
+        const newColumns = [...orderedColumns, newColumn]
+        setOrderedColumns(newColumns)
+        console.log("newLists", newColumns)
+
+
+    }
+    const handleAddCardToColumn = (columnId, newCard) => {
+        // Tìm danh sách cần cập nhật
+        const updatedLists = orderedColumns.map((column) => {
+          if (column._id === columnId) {
+            return {
+              ...column,
+              cardOrderIds:[...column.cardOrderIds,newCard._id],
+              cards: [...column.cards, newCard],
+            };
+          }
+          return column;
+        });
+    
+        // Cập nhật danh sách mới
+        setOrderedColumns(updatedLists);
+        console.log("updatedLists",updatedLists)
+      };
     const findColumnByCardId = (cardId) => {
         return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
     }
@@ -269,7 +310,7 @@ function BoardContent({ board }) {
                 p: "10px 0"
             }}>
 
-                <ListColumns columns={orderedColumns} handleColumnTitleChange={handleColumnTitleChange}></ListColumns>
+                <ListColumns columns={orderedColumns} handleColumnTitleChange={handleColumnTitleChange} handleAddNewColumn={handleAddNewColumn} handleAddCardToColumn={handleAddCardToColumn}></ListColumns>
                 <DragOverlay dropAnimation={dropAnimation}>
                     {(!activeDragItemType) && null}
                     {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}
