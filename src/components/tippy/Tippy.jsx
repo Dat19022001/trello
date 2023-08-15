@@ -12,8 +12,9 @@ import { BiMenuAltLeft } from 'react-icons/bi';
 import { RiScissorsCutLine } from 'react-icons/ri';
 import { AiOutlineCloud, AiOutlineCopy, AiOutlineFolderAdd } from 'react-icons/ai';
 import { MdDeleteForever } from 'react-icons/md';
+import { Button } from '@mui/material';
 
-function TippyCover() {
+function TippyCover({columnId,handleDeleteColumn}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -22,6 +23,9 @@ function TippyCover() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const deleteColumn = () => {
+        handleDeleteColumn(columnId)
+    }
     return (
         <div>
 
@@ -82,7 +86,9 @@ function TippyCover() {
                     <ListItemIcon>
                         <MdDeleteForever></MdDeleteForever>
                     </ListItemIcon>
-                    <ListItemText>Remove this column</ListItemText>
+                    <ListItemText>
+                        <Button sx={{textTransform:"inherit"}} onClick={deleteColumn}>Remove this column</Button>
+                    </ListItemText>
                 </MenuItem>
             </Menu>
         </div>

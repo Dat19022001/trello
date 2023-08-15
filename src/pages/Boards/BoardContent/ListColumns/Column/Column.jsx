@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-function Column({ column, handleColumnTitleChange, handleAddCardToColumn }) {
+function Column({ column, handleColumnTitleChange, handleAddCardToColumn,handleDeleteColumn }) {
     const [onAdd, setOnAdd] = useState(false);
     const [textAreaValue, setTextAreaValue] = useState("")
 
@@ -103,7 +103,7 @@ function Column({ column, handleColumnTitleChange, handleAddCardToColumn }) {
                     {/* <Typography sx={{ fontWeight: "bold", cursor: "pointer" }}>{column?.title}</Typography> */}
                     <Input sx={{ fontWeight: "bold", cursor: "pointer" }} value={inputValue} onChange={handleInputChange}></Input>
                     <Box>
-                        <TippyCover />
+                        <TippyCover handleDeleteColumn={handleDeleteColumn} columnId={column._id}/>
                     </Box>
                 </Box>
 

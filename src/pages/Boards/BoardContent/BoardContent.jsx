@@ -73,7 +73,7 @@ function BoardContent({ board }) {
     const handleAddNewColumn = (titleNewColumn) => {
 
         const lengthColumn = orderedColumns.length
-        const cardOrderId = "card-id-"+uuidv4()
+        const cardOrderId = "card-id-" + uuidv4()
         let newColumn = {
             _id: "column-id-0" + (lengthColumn + 1),
             boardId: 'board-id-01',
@@ -81,7 +81,7 @@ function BoardContent({ board }) {
             cardOrderIds: [cardOrderId],
             cards: [
 
-                { _id: cardOrderId, boardId: 'board-id-01', columnId: "column-id-0" + (lengthColumn + 1), title: 'Title of card'+uuidv4(), description: null, cover: null, memberIds: [], comments: [], attachments: [] },
+                { _id: cardOrderId, boardId: 'board-id-01', columnId: "column-id-0" + (lengthColumn + 1), title: 'Title of card' + uuidv4(), description: null, cover: null, memberIds: [], comments: [], attachments: [] },
 
             ]
 
@@ -93,23 +93,28 @@ function BoardContent({ board }) {
 
 
     }
+
+    const handleDeleteColumn = (columnId) => {
+        setOrderedColumns(prevColumns => prevColumns.filter(column => column._id !== columnId));
+    };
+
     const handleAddCardToColumn = (columnId, newCard) => {
         // Tìm danh sách cần cập nhật
         const updatedLists = orderedColumns.map((column) => {
-          if (column._id === columnId) {
-            return {
-              ...column,
-              cardOrderIds:[...column.cardOrderIds,newCard._id],
-              cards: [...column.cards, newCard],
-            };
-          }
-          return column;
+            if (column._id === columnId) {
+                return {
+                    ...column,
+                    cardOrderIds: [...column.cardOrderIds, newCard._id],
+                    cards: [...column.cards, newCard],
+                };
+            }
+            return column;
         });
-    
+
         // Cập nhật danh sách mới
         setOrderedColumns(updatedLists);
-        console.log("updatedLists",updatedLists)
-      };
+        console.log("updatedLists", updatedLists)
+    };
     const findColumnByCardId = (cardId) => {
         return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
     }
@@ -310,7 +315,7 @@ function BoardContent({ board }) {
                 p: "10px 0"
             }}>
 
-                <ListColumns columns={orderedColumns} handleColumnTitleChange={handleColumnTitleChange} handleAddNewColumn={handleAddNewColumn} handleAddCardToColumn={handleAddCardToColumn}></ListColumns>
+                <ListColumns columns={orderedColumns} handleColumnTitleChange={handleColumnTitleChange} handleAddNewColumn={handleAddNewColumn} handleAddCardToColumn={handleAddCardToColumn} handleDeleteColumn={handleDeleteColumn}></ListColumns>
                 <DragOverlay dropAnimation={dropAnimation}>
                     {(!activeDragItemType) && null}
                     {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}

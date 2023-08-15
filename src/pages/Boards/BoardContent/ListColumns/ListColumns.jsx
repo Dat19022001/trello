@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addNewColumn } from "../../../../redux/slice/appReduce";
 
-function ListColumns({ columns, handleColumnTitleChange,handleAddNewColumn,handleAddCardToColumn }) {
+function ListColumns({ columns, handleColumnTitleChange,handleAddNewColumn,handleAddCardToColumn,handleDeleteColumn }) {
     const [onAddColumn, setOnAddColumn] = useState(false);
     const [titleNewColumn, setTitleNewColumn] = useState("")
     const wrapperRef = useRef(null);
@@ -54,7 +54,7 @@ function ListColumns({ columns, handleColumnTitleChange,handleAddNewColumn,handl
                 overflowY: "hidden"
 
             }}>
-                {columns?.map((column) => <Column key={column._id} column={column} handleColumnTitleChange={handleColumnTitleChange} handleAddCardToColumn={handleAddCardToColumn}/>)}
+                {columns?.map((column) => <Column key={column._id} column={column} handleColumnTitleChange={handleColumnTitleChange} handleAddCardToColumn={handleAddCardToColumn} handleDeleteColumn={handleDeleteColumn}/>)}
 
 
 
