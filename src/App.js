@@ -16,7 +16,7 @@ function App() {
 
           <Router>
             <Header></Header>
-            <Board></Board>
+            {/* <Board></Board> */}
     
             <AppRouters />
           </Router>

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { getWorkspaceById } from "../../utils/storage";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import BoardColumns from "../Boards";
 const Workspace = () => {
   const { type } = useParams();
   const workspace = getWorkspaceById(type);
@@ -13,7 +14,8 @@ const Workspace = () => {
   return (
     <div className="Workspace1">
       <Sidebar workspace={workspace} />
-      <Board />
+      {/* <Board /> */}
+      <BoardColumns></BoardColumns>
     </div>
   );
 };

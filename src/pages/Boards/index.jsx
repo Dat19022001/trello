@@ -3,7 +3,7 @@ import {  Container } from "@mui/material";
 import {mockData} from '../../apis/mock-data'
 
 
-function Board() {
+function BoardColumns() {
     return (
         <Container disableGutters maxWidth={false} sx={{ height: '90vh', width: '100%', backgroundColor: 'primary.main' }}>
 
@@ -15,4 +15,4 @@ function Board() {
     );
 }
 
-export default Board;
+export default BoardColumns;

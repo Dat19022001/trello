@@ -310,7 +310,7 @@ function BoardContent({ board }) {
             collisionDetection={collisionDetectionStrategy}
         >
             <Box sx={{
-                backgroundColor: "primary.light",
+                backgroundColor: "primary.main",
                 width: "100%",
                 p: "10px 0"
             }}>
