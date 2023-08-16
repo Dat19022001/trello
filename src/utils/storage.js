@@ -7,6 +7,34 @@ export const getWorkSpaceStorage = () => {
   return JSON.parse(localStorage.getItem("Workspace")) || [];
 };
 
+export const getMembersByWorkspace = (id, name) => {
+  const members =  [
+    {
+      id: 1,
+      username: 'vbh30',
+      fullname: 'Vũ Bá Hướng',
+      wId: '52ee87ba-b960-49a1-b8fc-d458ed3f0efe'
+    },
+    {
+      id: 2,
+      username: 'nqh',
+      fullname: 'Nguyễn Quang Hải',
+      wId: '52ee87ba-b960-49a1-b8fc-d458ed3f0efe'
+
+    },
+    {
+      id: 3,
+      username: 'dnt',
+      fullname: 'Đạt',
+      wId: '52ee87ba-b960-49a1-b8fc-d458ed3f0efe'
+
+    }
+  ]
+  // const members = JSON.parse(localStorage.getItem("Members")) || [];
+  return members.filter(({ wId, fullname }) => wId === id && fullname.includes(name))
+};
+
+
 export const getWorkspaceById = (Id) => {
   const Workspaces = JSON.parse(localStorage.getItem("Workspace")) || [];
   const Workspace = Workspaces.find((item) => item.id === Id);

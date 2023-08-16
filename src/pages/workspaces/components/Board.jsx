@@ -18,7 +18,6 @@ const Board = () => {
   let workspace = getWorkspaceById(type);
   var Board = getBoard(workspace.id);
   const [data, setData] = useState(Board.board);
-  console.log(data);
   // var data = [];
   // if (Board === undefined) {
   //   data = [];

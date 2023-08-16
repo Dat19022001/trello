@@ -80,7 +80,9 @@ const Sidebar = ({ workspace }) => {
             <div className="sidebar-sub">Boards</div>
           </div>
         </div>
-        <div className="sidebar-li">
+        <div className="sidebar-li"
+          onClick={() => navigate(appPath.workspace + "/" + workspace.id + '/members')}
+          >
           <div className="sidebar-item">
             <MdManageAccounts />
             <div className="sidebar-sub">Members</div>

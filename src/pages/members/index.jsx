@@ -1,24 +1,22 @@
-import Sidebar from "./components/sidebar";
-import "./style.scss";
-import Board from "./components/Board";
 import { useParams } from "react-router-dom";
+import Sidebar from "../workspaces/components/sidebar";
 import { getWorkspaceById } from "../../utils/storage";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import BoardColumns from "../Boards";
-const Workspace = () => {
-  const { type } = useParams();
-  console.log(type);
-  const workspace = getWorkspaceById(type);
+import MemberList from "./components/MemberList";
+
+const WorkspaceMembers = () => {
+  const { id } = useParams();
+  const workspace = getWorkspaceById(id);
   const { onUpdate } = useSelector((states) => states.appReduce);
   useEffect(() => {}, [onUpdate]);
+
   return (
     <div className="Workspace1">
       <Sidebar workspace={workspace} />
-      <Board />
-      {/* <BoardColumns></BoardColumns> */}
+      <MemberList workspace={workspace} />
     </div>
   );
 };
 
-export default Workspace;
+export default WorkspaceMembers;
