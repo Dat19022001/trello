@@ -1,0 +1,49 @@
+.DeleteBoard {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  background-color: #282e33;
+  border-radius: 8px;
+  width: 304px;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  .DeleteBoard-title {
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    p {
+      color: #9fadbc;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 40px;
+      display: block;
+      height: 40px;
+      margin: 0;
+      overflow: hidden;
+      padding: 0 32px;
+    }
+  }
+  .DeleteBoard-body {
+    margin-bottom: 5px;
+    p {
+      color: #9fadbc;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 40px;
+      display: block;
+      height: 40px;
+      margin: 0;
+      overflow: hidden;
+    }
+  }
+  .DeleteBoard-btn {
+    background-color: #f87462;
+    box-shadow: none;
+    border: none;
+    color: #1d2125;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+  }
+}

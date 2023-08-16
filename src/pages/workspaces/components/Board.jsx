@@ -8,26 +8,64 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import CreateBoard from "../../../components/header/components/create/createBoard";
 import { setOpenCreateBoardSS } from "../../../redux/slice/appReduce";
+import { useState } from "react";
 const Board = () => {
   const { type } = useParams();
   const dispatch = useDispatch();
-  const { onUpdate, openCreateBoardSS } = useSelector(
+  const { onUpdate, openCreateBoardSS,createBoard,refetchBoard } = useSelector(
     (states) => states.appReduce
   );
   let workspace = getWorkspaceById(type);
-  const Board = getBoard(workspace.id);
-  if (Board === undefined) {
-    var data = [];
-  } else {
-    data = Board.board;
-  }
+  var Board = getBoard(workspace.id);
+  const [data, setData] = useState(Board.board);
+  console.log(data);
+  // var data = [];
+  // if (Board === undefined) {
+  //   data = [];
+  // } else {
+  //   data = Board.board;
+  // }
   const isOpen = () => {
     dispatch(setOpenCreateBoardSS(true));
   };
   const isClose = () => {
     dispatch(setOpenCreateBoardSS(false));
   };
-  useEffect(() => {}, [onUpdate]);
+  const onSort = (value) => {
+    if (value === "AZ") {
+      Board.board.sort((boardA, boardB) => {
+        const nameA = boardA.nameBoard.toUpperCase();
+        const nameB = boardB.nameBoard.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      setData(Board.board);
+    }else{
+      Board.board.sort((boardA, boardB) => {
+        const nameA = boardA.nameBoard.toUpperCase();
+        const nameB = boardB.nameBoard.toUpperCase();
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+        return 0;
+      });
+      setData(Board.board);
+    }
+  };
+  useEffect(() => {
+    Board = getBoard(workspace.id);
+    setData(Board.board);
+    // eslint-disable-next-line
+  }, [onUpdate,createBoard,refetchBoard]);
+
   return (
     <div className="board">
       <WorkSpaceTitle workspace={workspace} />
@@ -39,28 +77,19 @@ const Board = () => {
               <div className="board-label">Sort by</div>
               <Select
                 className="board-select"
-                defaultValue="choose"
+                defaultValue="A-Z"
                 style={{
                   width: 120,
                 }}
-                // onChange={handleChange}
+                onChange={onSort}
                 options={[
                   {
-                    value: "choose",
-                    label: "choose...",
+                    value: "AZ",
+                    label: "A-Z",
                   },
                   {
-                    value: "lucy",
-                    label: "Lucy",
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
+                    value: "ZA",
+                    label: "Z-A",
                   },
                 ]}
               />

@@ -6,6 +6,7 @@ import {
   AiOutlineDown,
   AiOutlineTable,
   AiOutlineStar,
+  AiOutlineClose,
 } from "react-icons/ai";
 import { MdManageAccounts } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
@@ -13,21 +14,29 @@ import { BsThreeDots } from "react-icons/bs";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CreateBoard from "../../../components/header/components/create/createBoard";
-import { setOpenCreateBoardS } from "../../../redux/slice/appReduce";
+import {
+  setOpenCreateBoardS,
+  setRefetchBoard,
+} from "../../../redux/slice/appReduce";
 import { useNavigate } from "react-router-dom";
 import { appPath } from "../../../config/appPath";
-import { getBoard } from "../../../utils/storage";
+import { deleteBoard, getBoard } from "../../../utils/storage";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Sidebar = ({ workspace }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { openCreateBoardS } = useSelector((states) => states.appReduce);
-  const Board = getBoard(workspace.id);
-  if (Board === undefined) {
-    var data = [];
-  } else {
-    data = Board.board;
-  }
+  const { openCreateBoardS, refetchBoard, createBoard } = useSelector(
+    (states) => states.appReduce
+  );
+  var Board = getBoard(workspace.id);
+  const [data, setData] = useState(Board.board);
+  // if (Board === undefined) {
+  //   var data = [];
+  // } else {
+  //   data = Board.board;
+  // }
   const isClose = () => {
     dispatch(setOpenCreateBoardS(false));
   };
@@ -38,6 +47,15 @@ const Sidebar = ({ workspace }) => {
     const firstCharacter = name.charAt(0).toUpperCase();
     return firstCharacter;
   };
+  const deleteBoard1 = (data) => {
+    deleteBoard(data);
+    dispatch(setRefetchBoard(Date.now()));
+  };
+  useEffect(() => {
+    Board = getBoard(workspace.id);
+    setData(Board.board);
+    // eslint-disable-next-line
+  }, [refetchBoard, createBoard]);
   return (
     <div className="sidebar">
       <div className="sidebar-title">
@@ -112,10 +130,17 @@ const Sidebar = ({ workspace }) => {
             <div style={{ display: "flex" }}>
               <BsThreeDots />
               <AiOutlineStar />
+              <AiOutlineClose
+                onClick={() =>
+                  deleteBoard1({ idWorkspace: workspace.id, idBoard: item.id })
+                }
+              />
             </div>
           </div>
         </div>
       ))}
+      <div className="sidebar-position"></div>
+
       {openCreateBoardS && (
         <div className="sidebar-openBoard">
           <CreateBoard />

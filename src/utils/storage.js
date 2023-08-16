@@ -66,3 +66,14 @@ export const getBoard = (id) => {
   const Board = Boards.find((item) => item.idWorkspace === id);
   return Board;
 };
+export const deleteBoard = (data) => {
+  const Boards = JSON.parse(localStorage.getItem("Boards")) || [];
+  const idWorkspace = data.idWorkspace;
+  const idBoard = data.idBoard;
+  const Board = Boards.find((item) => item.idWorkspace === idWorkspace);
+  if (Board) {
+    Board.board = Board.board.filter((board) => board.id !== idBoard);
+  }
+  localStorage.setItem("Boards", JSON.stringify(Boards));
+};
+
