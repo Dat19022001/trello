@@ -1,4 +1,5 @@
 export const appPath = {
   default:"/",
-  workspace:"/w"
+  workspace:"/w",
+  column: "/column"
 }

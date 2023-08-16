@@ -8,9 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import CreateBoard from "../../../components/header/components/create/createBoard";
 import { setOpenCreateBoardSS } from "../../../redux/slice/appReduce";
+import { useNavigate } from "react-router-dom";
+import { appPath } from "../../../config/appPath";
+
 const Board = () => {
   const { type } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { onUpdate, openCreateBoardSS } = useSelector(
     (states) => states.appReduce
   );
@@ -27,6 +31,10 @@ const Board = () => {
   const isClose = () => {
     dispatch(setOpenCreateBoardSS(false));
   };
+
+  const handleChangePageColumn = () => {
+    navigate(appPath.column + "/" + type);
+  }
   useEffect(() => {}, [onUpdate]);
   return (
     <div className="board">
@@ -114,6 +122,7 @@ const Board = () => {
               className="board-item board-star"
               style={{ backgroundImage: `url(${item.backgroundImage})` }}
               key={index}
+              onClick={handleChangePageColumn}
             >
               {item.nameBoard}
               <AiOutlineStar />

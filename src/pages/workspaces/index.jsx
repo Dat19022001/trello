@@ -8,14 +8,15 @@ import { useEffect } from "react";
 import BoardColumns from "../Boards";
 const Workspace = () => {
   const { type } = useParams();
+  console.log(type);
   const workspace = getWorkspaceById(type);
   const { onUpdate } = useSelector((states) => states.appReduce);
   useEffect(() => {}, [onUpdate]);
   return (
     <div className="Workspace1">
       <Sidebar workspace={workspace} />
-      {/* <Board /> */}
-      <BoardColumns></BoardColumns>
+      <Board />
+      {/* <BoardColumns></BoardColumns> */}
     </div>
   );
 };
