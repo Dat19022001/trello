@@ -1,0 +1,53 @@
+.wrapper {
+  flex: 1;
+  color: #b6c2cf;
+}
+
+.body {
+  margin: 0 auto;
+  max-width: 875px;
+}
+
+.input {
+  max-width: 300px;
+  background: transparent;
+  border: 2px solid #727e8a;
+  color: #8c9bab;
+  &::placeholder {
+    color: #8c9bab
+  }
+}
+
+.list {
+  border-top: 1px solid rgba(166, 197, 226, 0.1607843137);
+  margin-top: 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(166, 197, 226, 0.1607843137);
+}
+
+.thumb {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b8acfc;
+  border-radius: 50%;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.fullname {
+  font-weight: 800;
+}
+.username {
+  margin-top: 5px;
+  font-size: 14px;
+}

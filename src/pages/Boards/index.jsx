@@ -1,10 +1,9 @@
 import BoardContent from "../Boards/BoardContent/BoardContent";
 import { Container } from "@mui/material";
-import { mockData } from '../../apis/mock-data'
-import Sidebar from "../workspaces/components/sidebar";
-import { getWorkspaceById } from "../../utils/storage";
+import { mockData } from "../../apis/mock-data";
 import { useParams } from "react-router-dom";
-
+import { getWorkspaceById } from "../../utils/storage";
+import Sidebar from "../workspaces/components/sidebar";
 
 function BoardColumns() {
     const { type } = useParams();
