@@ -91,18 +91,13 @@ const NewCreate = () => {
                     label: "choose...",
                   },
                   {
-                    value: "lucy",
-                    label: "Lucy",
+                    value:"Operations",
+                    label: "Operations",
                   },
                   {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
-                  },
+                    value:"Human Resources",
+                    label: "Human Resources",
+                  }
                 ]}
               />
             </div>

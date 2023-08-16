@@ -6,6 +6,7 @@ import {
   AiOutlineDown,
   AiOutlineTable,
   AiOutlineStar,
+  AiOutlineClose,
 } from "react-icons/ai";
 import { MdManageAccounts } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
@@ -13,21 +14,26 @@ import { BsThreeDots } from "react-icons/bs";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CreateBoard from "../../../components/header/components/create/createBoard";
-import { setOpenCreateBoardS } from "../../../redux/slice/appReduce";
+import { setOpenCreateBoardS, setRefetchBoard } from "../../../redux/slice/appReduce";
 import { useNavigate } from "react-router-dom";
 import { appPath } from "../../../config/appPath";
-import { getBoard } from "../../../utils/storage";
+import { deleteBoard, getBoard } from "../../../utils/storage";
+import { useEffect, useState } from "react";
 
 const Sidebar = ({ workspace }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { openCreateBoardS } = useSelector((states) => states.appReduce);
-  const Board = getBoard(workspace.id);
+  const { openCreateBoardS, refetchBoard, createBoard } = useSelector(
+    (states) => states.appReduce
+  );
+  var Board = getBoard(workspace.id);
+
   if (Board === undefined) {
-    var data = [];
+    var data1 = [];
   } else {
-    data = Board.board;
+    data1 = Board.board;
   }
+  const [data, setData] = useState(data1);
   const isClose = () => {
     dispatch(setOpenCreateBoardS(false));
   };
@@ -38,6 +44,22 @@ const Sidebar = ({ workspace }) => {
     const firstCharacter = name.charAt(0).toUpperCase();
     return firstCharacter;
   };
+  const deleteBoard1 = (data) => {
+    deleteBoard(data);
+    dispatch(setRefetchBoard(Date.now()));
+  };
+  useEffect(() => {
+    Board = getBoard(workspace.id);
+    Board = getBoard(workspace.id);
+    if (Board === undefined) {
+      setData([]);
+    } else {
+      setData(Board.board);
+    }
+    // eslint-disable-next-line
+  }, [refetchBoard, createBoard]);
+ 
+
   return (
     <div className="sidebar">
       <div className="sidebar-title">
@@ -62,9 +84,12 @@ const Sidebar = ({ workspace }) => {
             <div className="sidebar-sub">Boards</div>
           </div>
         </div>
-        <div className="sidebar-li"
-          onClick={() => navigate(appPath.workspace + "/" + workspace.id + '/members')}
-          >
+        <div
+          className="sidebar-li"
+          onClick={() =>
+            navigate(appPath.workspace + "/" + workspace.id + "/members")
+          }
+        >
           <div className="sidebar-item">
             <MdManageAccounts />
             <div className="sidebar-sub">Members</div>
@@ -114,6 +139,11 @@ const Sidebar = ({ workspace }) => {
             <div style={{ display: "flex" }}>
               <BsThreeDots />
               <AiOutlineStar />
+              <AiOutlineClose
+                onClick={() =>
+                  deleteBoard1({ idWorkspace: workspace.id, idBoard: item.id })
+                }
+              />
             </div>
           </div>
         </div>

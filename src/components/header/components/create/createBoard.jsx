@@ -9,6 +9,7 @@ import { Input, Select } from "antd";
 import "./createBoard.scss";
 import { useDispatch } from "react-redux";
 import {
+  setCreateBoard,
   setOpenCreate,
   setOpenCreateBoard,
   setOpenCreateBoardS,
@@ -84,6 +85,7 @@ const CreateBoard = () => {
     dispatch(setOpenCreateBoard(false));
     dispatch(setOpenCreateBoardS(false));
     dispatch(setOpenCreateBoardSS(false));
+    dispatch(setCreateBoard(Date.now()))
   };
   return (
     <div className="NewBoard">
