@@ -17,14 +17,14 @@ function BoardColumns() {
             <Container disableGutters maxWidth={false} sx={{ height: '90vh', width: '100%', backgroundColor: 'primary.main' }}>
 
 
-<BoardContent board={mockData?.board}></BoardContent>
+                <BoardContent board={mockData?.board}></BoardContent>
 
 
-</Container>
+            </Container>
         </div>
-           
 
-    
+
+
 
     );
 }
