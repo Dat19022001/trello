@@ -31,7 +31,13 @@ const Sidebar = ({ workspace }) => {
     (states) => states.appReduce
   );
   var Board = getBoard(workspace.id);
-  const [data, setData] = useState(Board.board);
+  if (Board === undefined) {
+    var data1 = [];
+  } else {
+    data1 = Board.board;
+  }
+
+  const [data, setData] = useState(data1);
   // if (Board === undefined) {
   //   var data = [];
   // } else {
@@ -53,7 +59,12 @@ const Sidebar = ({ workspace }) => {
   };
   useEffect(() => {
     Board = getBoard(workspace.id);
-    setData(Board.board);
+    Board = getBoard(workspace.id);
+    if (Board === undefined) {
+      setData([]);
+    } else {
+      setData(Board.board);
+    }
     // eslint-disable-next-line
   }, [refetchBoard, createBoard]);
   return (

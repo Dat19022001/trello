@@ -12,12 +12,18 @@ import { useState } from "react";
 const Board = () => {
   const { type } = useParams();
   const dispatch = useDispatch();
-  const { onUpdate, openCreateBoardSS,createBoard,refetchBoard } = useSelector(
-    (states) => states.appReduce
-  );
+  const { onUpdate, openCreateBoardSS, createBoard, refetchBoard } =
+    useSelector((states) => states.appReduce);
   let workspace = getWorkspaceById(type);
   var Board = getBoard(workspace.id);
-  const [data, setData] = useState(Board.board);
+
+  if (Board === undefined) {
+    var data1 = [];
+  } else {
+    data1 = Board.board;
+  }
+  const [data, setData] = useState(data1);
+  console.log(data);
   // var data = [];
   // if (Board === undefined) {
   //   data = [];
@@ -44,7 +50,7 @@ const Board = () => {
         return 0;
       });
       setData(Board.board);
-    }else{
+    } else {
       Board.board.sort((boardA, boardB) => {
         const nameA = boardA.nameBoard.toUpperCase();
         const nameB = boardB.nameBoard.toUpperCase();
@@ -61,9 +67,14 @@ const Board = () => {
   };
   useEffect(() => {
     Board = getBoard(workspace.id);
-    setData(Board.board);
+    if (Board === undefined) {
+      setData([]);
+    } else {
+      setData(Board.board);
+    }
+
     // eslint-disable-next-line
-  }, [onUpdate,createBoard,refetchBoard]);
+  }, [onUpdate, createBoard, refetchBoard]);
 
   return (
     <div className="board">
